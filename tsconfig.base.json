@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@vault/core": ["packages/core/src/index.ts"],
+      "@vault/telemetry": ["packages/telemetry/src/index.ts"],
+      "@vault/config": ["packages/config/src/index.ts"]
+    }
+  }
+}

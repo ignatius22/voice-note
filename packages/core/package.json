@@ -1,0 +1,14 @@
+{
+  "name": "@vault/core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "echo No core tests yet",
+    "build": "tsc --noEmit"
+  }
+}

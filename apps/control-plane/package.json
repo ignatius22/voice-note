@@ -1,0 +1,22 @@
+{
+  "name": "@vault/control-plane",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "echo No control-plane tests yet",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vault/config": "workspace:*",
+    "fastify": "^5.5.0",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.8.3"
+  }
+}
