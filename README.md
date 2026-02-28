@@ -1,97 +1,124 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Vault Notes
 
-# Getting Started
+`Vault Notes` is a small React Native CLI app in a `pnpm` + Turborepo monorepo. The project is intentionally focused on systems architecture rather than UI polish.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Current scope:
+- `apps/mobile`: React Native mobile app
+- `apps/control-plane`: minimal Fastify service
+- `packages/core`: domain logic
+- `packages/config`: typed config schema and parsing
+- `packages/telemetry`: telemetry contracts and scrubbing
 
-## Step 1: Start Metro
+## Monorepo Layout
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```txt
+apps/
+  mobile/
+  control-plane/
+packages/
+  core/
+  config/
+  telemetry/
 ```
 
-## Step 2: Build and run your app
+## Requirements
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- Node.js 22+
+- `pnpm` 10+
+- Android Studio / Android SDK for Android builds
+- Xcode + CocoaPods for iOS builds
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## Install
 
 ```sh
-bundle install
+pnpm install
 ```
 
-Then, and every time you update your native dependencies, run:
+## Development
+
+Start Metro:
 
 ```sh
-bundle exec pod install
+pnpm mobile:start
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Run Android:
 
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+pnpm mobile:android
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+Run iOS:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```sh
+pnpm mobile:ios
+```
 
-## Step 3: Modify your app
+Run the control plane:
 
-Now that you have successfully run the app, let's make changes!
+```sh
+pnpm control-plane:dev
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Workspace Commands
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+Lint everything:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+```sh
+pnpm lint
+```
 
-## Congratulations! :tada:
+Typecheck everything:
 
-You've successfully run and modified your React Native App. :partying_face:
+```sh
+pnpm typecheck
+```
 
-### Now what?
+Run tests:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+```sh
+pnpm test
+```
 
-# Troubleshooting
+Build workspace packages:
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+```sh
+pnpm build
+```
 
-# Learn More
+## Mobile Notes
 
-To learn more about React Native, take a look at the following resources:
+The mobile app lives in [apps/mobile](/c:/Users/USER/Documents/workspace/RN/voiceNote/apps/mobile) and uses workspace packages directly:
+- `@vault/core`
+- `@vault/config`
+- `@vault/telemetry`
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Metro is configured for `pnpm` workspaces and symlink resolution in [apps/mobile/metro.config.js](/c:/Users/USER/Documents/workspace/RN/voiceNote/apps/mobile/metro.config.js).
+
+Android native paths were updated for the monorepo in:
+- [apps/mobile/android/settings.gradle](/c:/Users/USER/Documents/workspace/RN/voiceNote/apps/mobile/android/settings.gradle)
+- [apps/mobile/android/app/build.gradle](/c:/Users/USER/Documents/workspace/RN/voiceNote/apps/mobile/android/app/build.gradle)
+
+## Control Plane
+
+The control plane is a minimal Fastify service in [apps/control-plane/src/server.ts](/c:/Users/USER/Documents/workspace/RN/voiceNote/apps/control-plane/src/server.ts).
+
+Current routes:
+- `POST /auth/request-otp`
+- `POST /auth/verify-otp`
+- `GET /config`
+
+## Documentation
+
+- Security notes: [SECURITY.md](/c:/Users/USER/Documents/workspace/RN/voiceNote/SECURITY.md)
+- Failure drills: [failure-drills.md](/c:/Users/USER/Documents/workspace/RN/voiceNote/failure-drills.md)
+
+## Current Status
+
+This repo has been migrated from a single React Native app into a monorepo scaffold. The core workspace structure, shared packages, Android monorepo path fixes, and control-plane skeleton are in place.
+
+The next major task is to finish stabilizing the mobile runtime path and then wire the first real integrations:
+- secure storage
+- observability
+- typed remote config
+- OTA flow
