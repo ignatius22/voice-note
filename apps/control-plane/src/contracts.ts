@@ -14,10 +14,15 @@ export const requestOtpResponseSchema = z.object({
   ok: z.literal(true),
 });
 
+export const authErrorResponseSchema = z.object({
+  ok: z.literal(false),
+  code: z.enum(['INVALID_OTP', 'OTP_EXPIRED']),
+});
+
 export const verifyOtpResponseSchema = z.object({
   ok: z.literal(true),
   sessionToken: z.string(),
-  hashedUserId: z.string(),
+  userIdHash: z.string(),
 });
 
 export const configResponseSchema = z.object({

@@ -6,7 +6,7 @@
     "dev": "tsx watch src/server.ts",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "echo No control-plane tests yet",
+    "test": "vitest run",
     "build": "tsc --noEmit"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^24.3.0",
     "tsx": "^4.20.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
