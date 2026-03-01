@@ -1,5 +1,6 @@
 const REDACTED = '[REDACTED]';
-const SENSITIVE_KEY = /(email|note|content|body|token|secret|otp)/i;
+const SENSITIVE_KEY =
+  /(email|note|content|body|token|secret|otp|brandName|campaignName|contactHandle|privateNotes|sessionToken)/i;
 const EMAIL = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 
 export function scrub<T>(value: T): T {

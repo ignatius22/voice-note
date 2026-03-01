@@ -1,5 +1,5 @@
 const SESSION_SERVICE = 'com.vaultnotes.session';
-const NOTES_KEY_SERVICE = 'com.vaultnotes.notes-key';
+const DEALS_KEY_SERVICE = 'com.vaultnotes.deals-key';
 
 export interface StoredSession {
   sessionToken: string;
@@ -108,7 +108,7 @@ function createEncryptionKeyStore(adapter: SecureStringAdapter) {
   };
 }
 
-// Protected: session token and notes encryption key stay in Keychain/Keystore only.
+// Protected: session token and deals encryption key stay in Keychain/Keystore only.
 // Not protected: rooted devices, OS compromise, malware on an unlocked device.
 export async function restoreSession(): Promise<StoredSession | null> {
   const store = createSessionStore(await createKeychainAdapter(SESSION_SERVICE));
@@ -125,17 +125,21 @@ export async function clearSession(): Promise<void> {
   await store.clear();
 }
 
-export async function restoreNotesEncryptionKey(): Promise<string | null> {
-  const store = createEncryptionKeyStore(await createKeychainAdapter(NOTES_KEY_SERVICE));
+export async function restoreDealsEncryptionKey(): Promise<string | null> {
+  const store = createEncryptionKeyStore(await createKeychainAdapter(DEALS_KEY_SERVICE));
   return store.restore();
 }
 
-export async function persistNotesEncryptionKey(key: string): Promise<void> {
-  const store = createEncryptionKeyStore(await createKeychainAdapter(NOTES_KEY_SERVICE));
+export async function persistDealsEncryptionKey(key: string): Promise<void> {
+  const store = createEncryptionKeyStore(await createKeychainAdapter(DEALS_KEY_SERVICE));
   await store.save(key);
 }
 
-export async function clearNotesEncryptionKey(): Promise<void> {
-  const store = createEncryptionKeyStore(await createKeychainAdapter(NOTES_KEY_SERVICE));
+export async function clearDealsEncryptionKey(): Promise<void> {
+  const store = createEncryptionKeyStore(await createKeychainAdapter(DEALS_KEY_SERVICE));
   await store.clear();
 }
+
+export const restoreNotesEncryptionKey = restoreDealsEncryptionKey;
+export const persistNotesEncryptionKey = persistDealsEncryptionKey;
+export const clearNotesEncryptionKey = clearDealsEncryptionKey;

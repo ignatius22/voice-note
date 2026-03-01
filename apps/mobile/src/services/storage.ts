@@ -146,7 +146,7 @@ async function createMmkvAdapters() {
     createEncryptedStore(encryptionKey?: string) {
       return new MMKV({
         id: NOTES_STORAGE_ID,
-        encryptionKey,
+        ...(encryptionKey && { encryptionKey }),
       }) as NoteStorageAdapter;
     },
   };

@@ -14,8 +14,45 @@ export const eventContracts = {
     restored: z.boolean(),
   }),
   auth_logged_out: z.object({}),
-  note_created: z.object({
-    lengthBucket: z.enum(['1_50', '51_140', '141_280', '281_plus']),
+  deal_created: z.object({
+    status: z.enum([
+      'lead',
+      'negotiating',
+      'active',
+      'delivered',
+      'paid',
+      'archived',
+    ]),
+    amountBucket: z.enum(['unknown', '1_999', '1000_4999', '5000_19999', '20000_plus']),
+    currency: z.enum(['NGN', 'USD', 'GBP', 'EUR']).nullable(),
+  }),
+  deal_status_changed: z.object({
+    fromStatus: z.enum([
+      'lead',
+      'negotiating',
+      'active',
+      'delivered',
+      'paid',
+      'archived',
+    ]),
+    toStatus: z.enum([
+      'lead',
+      'negotiating',
+      'active',
+      'delivered',
+      'paid',
+      'archived',
+    ]),
+  }),
+  deal_deleted: z.object({
+    status: z.enum([
+      'lead',
+      'negotiating',
+      'active',
+      'delivered',
+      'paid',
+      'archived',
+    ]),
   }),
 } as const;
 

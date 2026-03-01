@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "echo No core tests yet",
+    "test": "vitest run",
     "build": "tsc --noEmit"
   }
 }

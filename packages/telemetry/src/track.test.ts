@@ -15,4 +15,15 @@ describe('telemetry', () => {
     expect(result.name).toBe('app_opened');
     expect(result.payload).toEqual({ source: 'cold_start' });
   });
+
+  it('throws in dev when forbidden telemetry keys are present', async () => {
+    await expect(
+      trackEvent('deal_created', {
+        status: 'lead',
+        amountBucket: 'unknown',
+        currency: null,
+        brandName: 'Acme',
+      } as never),
+    ).rejects.toThrowError('FORBIDDEN_TELEMETRY_KEY:brandName');
+  });
 });
